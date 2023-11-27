@@ -46,11 +46,11 @@ The internal abstraction level provides a detailed and technical view of the int
    - Attributes: id (PK), name.
 
 5. **lot:**
-   - Attributes: id (PK), lot_number, expiration_date, supplier_id (FK).
+   - Attributes: id (PK), lot_number, expiration_date.
    - Relationships: Supplied by (FK - supplier).
 
 6. **invoice:**
-   - Attributes: id (PK), employee_id (FK), date, description, total_price.
+   - Attributes: id (PK), employee_id (FK), date, description, total_price, quantity, supplier_id (FK).
    - Relationships: Generates (FK - employee), Includes Ingredients (FK - ingredients_in_invoice).
 
 7. **supplier:**
@@ -109,7 +109,7 @@ The conceptual abstraction level provides a more general and understandable view
    - Relationships: Supplied by (with Supplier).
 
 6. **Invoice:**
-   - Attributes: ID, Employee ID, Date, Description, Total Price.
+   - Attributes: ID, Employee ID, Date, Description, Total Price, Quantity, Supplier ID.
    - Relationships: Generates (with Employee), Includes Ingredients (with Ingredients).
 
 7. **Supplier:**
@@ -129,6 +129,8 @@ The conceptual abstraction level provides a more general and understandable view
 - **Composed of (Raw_materials_stock - Ingredient):** Relationship between raw materials inventory and ingredients.
 - **Supplied by (Lot - Supplier):** Relationship between lots and suppliers.
 - **Generates (Invoice - Employee):** Relationship between invoices and employees.
+- **Bought to (Invoice - Supplier):** Relationship
+between invoices and suppliers.
 - **Includes Ingredients (Invoice - Ingredients):** Relationship between invoices and ingredients.
 - **Supplies (Supplier_x_lot - Supplier and Lot):** Relationship between suppliers and lots.
 - **Located in (Storage_area - Storage Office):** Relationship between storage areas and offices.
