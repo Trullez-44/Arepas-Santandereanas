@@ -19,7 +19,7 @@ CREATE TABLE raw_materials_stock(
     id INT UNSIGNED NOT NULL,
     pounds_per_unit INT UNSIGNED NOT NULL,
     quantity INT UNSIGNED NOT NULL,
-    storage_area_id INT UNSIGNED NOT NULL,
+    area_id INT UNSIGNED NOT NULL,
     lot_id INT UNSIGNED NOT NULL,
     description VARCHAR(255) NULL,
     ingredient_id INT UNSIGNED NOT NULL
@@ -95,16 +95,39 @@ ALTER TABLE
 --
 ALTER TABLE
     employee ADD CONSTRAINT employee_pk PRIMARY KEY (id);
-
+    ALTER TABLE
+    employee_place ADD CONSTRAINT employeePlace_pk PRIMARY KEY (id);
+ALTER TABLE
+    emails ADD CONSTRAINT emails_pk PRIMARY KEY (id);
+ALTER TABLE
+    office ADD CONSTRAINT office_pk PRIMARY KEY (id);
+ALTER TABLE
+    phone_numbers ADD CONSTRAINT phone_numbers_pk PRIMARY KEY (id);
+ALTER TABLE
+    supplier ADD CONSTRAINT supplier_pk PRIMARY KEY (id);
+ALTER TABLE
+    supplier_x_lot ADD CONSTRAINT supplier_x_lot_pk PRIMARY KEY (id);
+ALTER TABLE
+    lot ADD CONSTRAINT lot_pk PRIMARY KEY (id);
+ALTER TABLE
+    area ADD CONSTRAINT area_pk PRIMARY KEY (id);
+ALTER TABLE
+    raw_materials_stock ADD CONSTRAINT raw_materials_stock_pk PRIMARY KEY (id);
+ALTER TABLE
+    ingredient ADD CONSTRAINT ingredient_pk PRIMARY KEY (id);
+ALTER TABLE
+    ingredients_in_invoice ADD CONSTRAINT lot_pk PRIMARY KEY (id);
+ALTER TABLE
+    invoice ADD CONSTRAINT invoice_pk PRIMARY KEY (id);
 --
 ALTER TABLE
     raw_materials_stock ADD CONSTRAINT raw_materials_stock_lot_id_foreign FOREIGN KEY(lot_id) REFERENCES lot(id);
 ALTER TABLE
-    phone_numbers ADD CONSTRAINT phone_numbers_owner_id_foreign FOREIGN KEY(owner_id) REFERENCES office(id);
+    phone_numbers ADD CONSTRAINT phone_numbers_office_id_foreign FOREIGN KEY(owner_id) REFERENCES office(id);
 ALTER TABLE
     ingredients_in_invoice ADD CONSTRAINT ingredients_in_invoice_ingredient_id_foreign FOREIGN KEY(ingredient_id) REFERENCES ingredient(id);
 ALTER TABLE
-    emails ADD CONSTRAINT emails_owner_id_foreign FOREIGN KEY(owner_id) REFERENCES supplier(id);
+    emails ADD CONSTRAINT emails_supplier_id_foreign FOREIGN KEY(owner_id) REFERENCES supplier(id);
 ALTER TABLE
     ingredients_in_invoice ADD CONSTRAINT ingredients_in_invoice_invoice_id_foreign FOREIGN KEY(invoice_id) REFERENCES invoice(id);
 ALTER TABLE
@@ -112,19 +135,19 @@ ALTER TABLE
 ALTER TABLE
     invoice ADD CONSTRAINT invoice_employee_id_foreign FOREIGN KEY(employee_id) REFERENCES employee(id);
 ALTER TABLE
-    emails ADD CONSTRAINT emails_owner_id_foreign FOREIGN KEY(owner_id) REFERENCES office(id);
+    emails ADD CONSTRAINT emails_office_id_foreign FOREIGN KEY(owner_id) REFERENCES office(id);
 ALTER TABLE
     supplier_x_lot ADD CONSTRAINT supplier_x_lot_supplier_id_foreign FOREIGN KEY(supplier_id) REFERENCES supplier(id);
 ALTER TABLE
-    phone_numbers ADD CONSTRAINT phone_numbers_owner_id_foreign FOREIGN KEY(owner_id) REFERENCES employee(id);
+    phone_numbers ADD CONSTRAINT phone_numbers_employee_id_foreign FOREIGN KEY(owner_id) REFERENCES employee(id);
 ALTER TABLE
     employee ADD CONSTRAINT employee_boss_id_foreign FOREIGN KEY(boss_id) REFERENCES employee(id);
 ALTER TABLE
     area ADD CONSTRAINT area_office_id_foreign FOREIGN KEY(office_id) REFERENCES office(id);
 ALTER TABLE
-    phone_numbers ADD CONSTRAINT phone_numbers_owner_id_foreign FOREIGN KEY(owner_id) REFERENCES supplier(id);
+    phone_numbers ADD CONSTRAINT phone_numbers_supplier_id_foreign FOREIGN KEY(owner_id) REFERENCES supplier(id);
 ALTER TABLE
-    emails ADD CONSTRAINT emails_owner_id_foreign FOREIGN KEY(owner_id) REFERENCES employee(id);
+    emails ADD CONSTRAINT emails_employee_id_foreign FOREIGN KEY(owner_id) REFERENCES employee(id);
 ALTER TABLE
     supplier_x_lot ADD CONSTRAINT supplier_x_lot_lot_id_foreign FOREIGN KEY(lot_id) REFERENCES lot(id);
 ALTER TABLE
@@ -132,4 +155,4 @@ ALTER TABLE
 ALTER TABLE
     employee_place ADD CONSTRAINT employee_place_area_id_foreign FOREIGN KEY(area_id) REFERENCES area(id);
 ALTER TABLE
-    raw_materials_stock ADD CONSTRAINT raw_materials_stock_storage_area_id_foreign FOREIGN KEY(storage_area_id) REFERENCES area(office_id);
+    raw_materials_stock ADD CONSTRAINT raw_materials_stock_area_id_foreign FOREIGN KEY(area_id) REFERENCES area(office_id);

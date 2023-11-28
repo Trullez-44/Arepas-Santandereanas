@@ -1,3 +1,62 @@
+-- EMPLOYEES
+INSERT INTO employee VALUE (1,'Luz Angela', 'Garcia','Calle 44 # 9-14','Jefa',NULL);
+-- Employee Positions
+INSERT INTO employee (id, name, last_name, address, position, boss_id) VALUES
+(2, 'Maria Isabel', 'González', 'Calle 72 #10-34', 'Office Manager', 1),
+(3, 'Carlos Antonio', 'Rodríguez', 'Carrera 45 #23-12', 'Office Manager', 1),
+(4, 'Laura Patricia', 'Hernández', 'Avenida 15 #5-89', 'Office Manager', 1),
+(5, 'David Alejandro', 'Martínez', 'Carrera 18 #40-67', 'Office Manager', 1),    
+(6, 'Ana Carolina', 'López', 'Calle 56 #8-21', 'Office Manager', 1),  
+(7, 'Maria Alejandra', 'Sánchez', 'Carrera 32 #14-45', 'Head Chef', 2),
+(8, 'Carlos Eduardo', 'Pérez', 'Calle 85 #20-30', 'Head Chef', 3),
+(9, 'Laura Sofia', 'Ramírez', 'Avenida 10 #34-76', 'Head Chef', 4),
+(10, 'David Andrés', 'Díaz', 'Carrera 50 #18-15', 'Head Chef', 5),    
+(11, 'Ana Maria', 'Torres', 'Calle 68 #25-19', 'Head Chef', 6),  
+(12, 'Pedro José', 'Fernández', 'Carrera 14 #30-40', 'The Cashier', 2),  
+(13, 'Isabel Cristina', 'Gómez', 'Avenida 5 #16-25', 'The Cashier', 3),  
+(14, 'Juan Esteban', 'Jiménez', 'Calle 42 #12-38', 'The Cashier', 4),
+(15, 'Sofia Fernanda', 'Vargas', 'Avenida 8 #22-17', 'The Cashier', 5),
+(16, 'Alejandro Luis', 'Serrano', 'Carrera 25 #9-65', 'The Cashier', 6),
+(17, 'Lucia María', 'Molina', 'Calle 82 #34-56', 'Ingredient Mover', 2),
+(18, 'Diego Alejandro', 'Castro', 'Avenida 12 #45-23', 'Ingredient Mover', 2),
+(19, 'Elena Carolina', 'Gutiérrez', 'Carrera 38 #14-32', 'Ingredient Mover', 2),
+(20, 'Gabriel Antonio', 'Ortiz', 'Calle 70 #19-28', 'Ingredient Mover', 2),
+(21, 'Valeria Sofia', 'Chavez', 'Avenida 30 #25-18', 'Ingredient Mover', 3),
+(22, 'Javier Enrique', 'Ramos', 'Carrera 19 #8-75', 'Sous Chef', 7),
+(23, 'Camila Isabel', 'Ruiz', 'Calle 54 #10-56', 'Sous Chef', 8),
+(24, 'Miguel Angel', 'Alvarez', 'Avenida 7 #15-22', 'Sous Chef', 9),
+(25, 'Adriana Patricia', 'Reyes', 'Carrera 23 #30-45', 'Sous Chef', 10),
+(26, 'Mateo Alejandro', 'Mendoza', 'Calle 65 #12-34', 'Sous Chef', 11),
+(27, 'Isabella Antonia', 'Castillo', 'Carrera 31 #23-19', 'Ingredient Mover', 3),
+(28, 'Daniel Alejandro', 'Estrada', 'Calle 42 #8-33', 'Ingredient Mover', 3),
+(29, 'Emma Valentina', 'Pardo', 'Avenida 18 #35-40', 'Ingredient Mover', 3),
+(30, 'Nicolas Felipe', 'Vega', 'Carrera 10 #14-28', 'Ingredient Mover', 4),
+(31, 'Sara Isabella', 'Moreno', 'Calle 75 #19-25', 'Ingredient Mover', 4),
+(32, 'Alejandra Sofia', 'Duarte', 'Avenida 22 #30-12', 'Ingredient Mover', 4),
+(33, 'Juan David', 'Cardona', 'Carrera 28 #16-22', 'Ingredient Mover', 4),
+(34, 'Isabella Maria', 'Herrera', 'Calle 50 #23-10', 'Ingredient Mover', 5),
+(35, 'Daniel Enrique', 'Giraldo', 'Avenida 14 #27-18', 'Ingredient Mover', 5),
+(36, 'Emma Valentina', 'Salazar', 'Carrera 35 #10-32', 'Ingredient Mover', 5),
+(37, 'Nicolas Alejandro', 'Valencia', 'Calle 80 #15-19', 'Ingredient Mover', 5),
+(38, 'Sara Fernanda', 'Restrepo', 'Avenida 25 #30-45', 'Ingredient Mover', 6),
+(39, 'Alejandra Isabel', 'Velasco', 'Calle 60 #18-22', 'Ingredient Mover', 6),
+(40, 'Juan Pablo', 'Bermúdez', 'Carrera 20 #25-30', 'Ingredient Mover', 6),
+(41, 'Juan Felipe', 'Monsalve', 'Avenida 33 #40-15', 'Ingredient Mover', 6),
+(42, 'Alejandra Maria', 'Gaviria', 'Carrera 12 #15-28', 'Delivery person', 2),
+(43, 'Juan Esteban', 'Rojas', 'Calle 38 #10-45', 'Delivery person', 3),
+(44, 'Isabella Cristina', 'Arango', 'Avenida 17 #22-19', 'Delivery person', 4),
+(45, 'Daniel Alejandro', 'Herrera', 'Carrera 5 #12-33', 'Delivery person', 5),
+(46, 'Emma Valentina', 'González', 'Calle 48 #18-26', 'Delivery person', 6),
+(47, 'Nicolas Felipe', 'Ramírez', 'Carrera 14 #30-15', 'Packer person', 2),
+(48, 'Sara Isabella', 'Pérez', 'Avenida 28 #10-38', 'Packer person', 3),
+(49, 'Alejandra Sofia', 'Jiménez', 'Calle 60 #25-19', 'Packer person', 4),
+(50, 'Juan David', 'Gómez', 'Avenida 8 #14-29', 'Packer person', 5),
+(51, 'Juan Felipe', 'Chaves', 'Carrera 35 #20-17', 'Packer person', 6);
+
+
+
+
+
 -- INGREDIENTES
 INSERT INTO ingredient (id, name) VALUES
 (1, 'Cheese'),
@@ -9,20 +68,53 @@ INSERT INTO ingredient (id, name) VALUES
 (7, 'Sugar'),
 (8, 'Butter');
 
--- EMPLOYEES
-INSERT INTO employee VALUE (1, 'Luz Angela', 'Garcia','Calle 44 # 9-14','Jefa',NULL)
-
 -- STORAGE OFFICE
-INSERT INTO office (id, address, manager_employee_id) VALUES
-(1, 'Carrera 7 # 72-34, Bogotá', 1),
-(2, 'Calle 127 # 19-15, Bogotá', 2),
-(3, 'Carrera 15 # 48-68, Bogotá', 3),
-(4, 'Calle 34 # 23-45, Bucaramanga', 4),
-(5, 'Carrera 27 # 56-89, Bucaramanga', 5);
+INSERT INTO office (id, address) VALUES
+(1, 'Carrera 7 # 72-34, Bogotá'),
+(2, 'Calle 127 # 19-15, Bogotá' ),
+(3, 'Carrera 15 # 48-68, Bogotá' ),
+(4, 'Calle 34 # 23-45, Bucaramanga'),
+(5, 'Carrera 27 # 56-89, Bucaramanga' );
 -- STORAGE AREAS
-INSERT INTO area (id, area_type, office_id, employee_in_charge_id) VALUES
-(1, 'Dairy Section 1', 1, 1),  
-(2, 'Sweet Section', 1, 2),    
-(3, 'Cold Storage', 1, 3),    
-(4, 'Dry Storage', 1, 4),
-(5, 'Dairy Section 2', 1, 5);     
+INSERT INTO area VALUES
+(1, 'Dairy Section 1', 1,'For Cheese and Butter'),  
+(2, 'Sweet Section', 1,'For Guava Paste and Dulce de Leche'),    
+(3, 'Cold Storage', 1,'For Ham'),    
+(4, 'Dry Storage', 1,'For Flour, Salt, and Sugar'),
+(5, 'Kitchen',1,NULL),
+(6, 'Dairy Section 1', 2,'For Cheese and Butter'),  
+(7, 'Sweet Section', 2,'For Guava Paste and Dulce de Leche'),    
+(8, 'Cold Storage', 2,'For Ham'),    
+(9, 'Dry Storage', 2,'For Flour, Salt, and Sugar'),
+(10, 'Kitchen',2,NULL),
+(11, 'Dairy Section 1', 3,'For Cheese and Butter'),  
+(12, 'Sweet Section', 3,'For Guava Paste and Dulce de Leche'),    
+(13, 'Cold Storage', 3,'For Ham'),    
+(14, 'Dry Storage', 3,'For Flour, Salt, and Sugar'),
+(15, 'Kitchen',3,NULL),
+(16, 'Dairy Section 1', 4,'For Cheese and Butter'),  
+(17, 'Sweet Section', 4,'For Guava Paste and Dulce de Leche'),    
+(18, 'Cold Storage', 4,'For Ham'),    
+(19, 'Dry Storage', 4,'For Flour, Salt, and Sugar'),
+(20, 'Kitchen',4,NULL),
+(21, 'Dairy Section 1', 5,'For Cheese and Butter'),  
+(22, 'Sweet Section', 5,'For Guava Paste and Dulce de Leche'),    
+(23, 'Cold Storage', 5,'For Ham'),    
+(24, 'Dry Storage', 5,'For Flour, Salt, and Sugar'),
+(25, 'Kitchen',5,NULL),
+(26, 'Cashier',1,'Cashier office 1'),
+(27, 'Cashier',2,'Cashier office 2'),
+(28, 'Cashier',3,'Cashier office 3'),
+(29, 'Cashier',4,'Cashier office 4'),
+(30, 'Cashier',5,'Cashier office 5'),
+(31, 'Packing Area',1,NULL),
+(32, 'Packing Area',2,NULL),
+(33, 'Packing Area',3,NULL),
+(34, 'Packing Area',4,NULL),
+(35, 'Packing Area',5,NULL),
+(36, 'Transportation Area',1,'Transportation Zone Office 1'),
+(37, 'Transportation Area',2,'Transportation Zone Office 2'),
+(38, 'Transportation Area',3,'Transportation Zone Office 3'),
+(39, 'Transportation Area',4,'Transportation Zone Office 4'),
+(40, 'Transportation Area',5,'Transportation Zone Office 5');
+

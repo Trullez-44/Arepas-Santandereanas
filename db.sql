@@ -89,7 +89,6 @@ ALTER TABLE
     emails ADD CONSTRAINT emails_pk PRIMARY KEY (id);
 ALTER TABLE
     storage_office ADD CONSTRAINT storage_office_pk PRIMARY KEY (id);
-
 ALTER TABLE
     phone_numbers ADD CONSTRAINT phone_numbers_pk PRIMARY KEY (id);
 ALTER TABLE
