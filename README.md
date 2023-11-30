@@ -1109,14 +1109,14 @@ CALL EditRawMaterialsStock(42, 200);
 #### DELETE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
+CREATE PROCEDURE DeleteRawMaterialsStock(IN deleteId INT UNSIGNED)
 BEGIN
-    DELETE FROM invoice
+    DELETE FROM raw_materials_stock
     WHERE id = deleteId;
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(43);
+CALL DeleteRawMaterialsStock(42);
 ```
 
 ## INVOICE TABLE
@@ -1154,7 +1154,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL FindInvoiceById(41);
  
 ```
@@ -1168,7 +1168,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL EditInvoices(41,42);
 ```
 #### DELETE
@@ -1180,7 +1180,7 @@ BEGIN
     WHERE id = deleteId;
 END //
 DELIMITER ;
-
+ 
 CALL DeleteInvoice(42);
 ```
 
@@ -1206,7 +1206,7 @@ BEGIN
     INSERT INTO area VALUES (id, area_name, office_id, description);
 END //
 DELIMITER ;
-
+ 
 CALL CreateArea(44, 'Zona de Azote', 1, 'Acà se azota');
  
  
@@ -1221,12 +1221,13 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL FindAreaById(44);
  
 ```
 #### UPDATE
 ```SQL
+DELIMITER //
 CREATE PROCEDURE EditArea(IN findId INT UNSIGNED, changeName VARCHAR(255))
 BEGIN
     UPDATE area
@@ -1234,7 +1235,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL EditArea(45, 'AEROPUERTOOOOOOOO');
 ```
 #### DELETE
@@ -1246,7 +1247,7 @@ BEGIN
     WHERE id = deleteId;
 END //
 DELIMITER ;
-
+ 
 CALL DeleteArea(45);
 ```
 ## INGREDIENT TABLE
@@ -1269,7 +1270,7 @@ BEGIN
     INSERT INTO ingredient VALUES (id, name);
 END //
 DELIMITER ;
-
+ 
 CALL CreateIngredient(144, 'INGREDIENTE:AGUARDIENTE');
  
 ```
@@ -1282,7 +1283,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL FindIngredientById(144);
  
  
@@ -1297,7 +1298,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL EditIngredient(144, 'GUARO');
 
 ```
@@ -1310,7 +1311,7 @@ BEGIN
     WHERE id = deleteId;
 END //
 DELIMITER ;
-
+ 
 CALL DeleteIngredient(144);
 ```
 ## LOT TABLE
@@ -1334,7 +1335,7 @@ BEGIN
     INSERT INTO lot VALUES (id, lot_number, expiration_date);
 END //
 DELIMITER ;
-
+ 
 CALL CreateLot(4444, 'LOL1234', '2023-12-31');
  
 ```
@@ -1347,7 +1348,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL FindLotById(4444);
  
  
@@ -1362,7 +1363,7 @@ BEGIN
     WHERE id = findId;
 END //
 DELIMITER ;
-
+ 
 CALL EditLot(1, 'VAL1234');
 ```
 #### DELETE
@@ -1374,6 +1375,6 @@ BEGIN
     WHERE id = deleteId;
 END //
 DELIMITER ;
-
+ 
 CALL DeleteLot(4444);
 ```
