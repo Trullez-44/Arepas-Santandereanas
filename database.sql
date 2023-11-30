@@ -27,7 +27,7 @@ CREATE TABLE raw_materials_stock(
     quantity INT UNSIGNED NOT NULL,
     area_id INT UNSIGNED NOT NULL,
     lot_id INT UNSIGNED NOT NULL,
-    description VARCHAR(255) NULL,
+    description VARCHAR(255),
     ingredient_id INT UNSIGNED NOT NULL
 );
 /* DONE */
@@ -46,15 +46,14 @@ CREATE TABLE invoice(
     id INT UNSIGNED NOT NULL,
     employee_id INT UNSIGNED NOT NULL,
     date DATE NOT NULL,
-    supplier_id INT UNSIGNED NOT NULL,
-    lot VARCHAR(255) NOT NULL
+    supplier_id INT UNSIGNED NOT NULL
 );
 /* DONE */
 CREATE TABLE employee_place(
     id INT UNSIGNED NOT NULL,
     employee_id INT UNSIGNED NOT NULL,
     area_id INT UNSIGNED NOT NULL,
-    description VARCHAR(255) NULL
+    description VARCHAR(255)
 );
 /* DONE */
 CREATE TABLE supplier(
@@ -86,7 +85,8 @@ CREATE TABLE ingredients_in_invoice(
     ingredient_id INT UNSIGNED NOT NULL,
     quantity INT NOT NULL,
     description VARCHAR(255),
-    price INT UNSIGNED NOT NULL
+    price INT UNSIGNED NOT NULL,
+    lot VARCHAR(255) NOT NULL
 );
 --
 ALTER TABLE
@@ -96,7 +96,7 @@ ALTER TABLE
 --
 ALTER TABLE
     employee ADD CONSTRAINT employee_pk PRIMARY KEY (id);
-    ALTER TABLE
+ALTER TABLE
     employee_place ADD CONSTRAINT employeePlace_pk PRIMARY KEY (id);
 ALTER TABLE
     office ADD CONSTRAINT office_pk PRIMARY KEY (id);
@@ -117,8 +117,7 @@ ALTER TABLE
 ALTER TABLE
     invoice ADD CONSTRAINT invoice_pk PRIMARY KEY (id);
 --
-ALTER TABLE
-    raw_materials_stock ADD CONSTRAINT fk_office_manager_id FOREIGN KEY(manager_id) REFERENCES employee(id);
+
 ALTER TABLE
     raw_materials_stock ADD CONSTRAINT raw_materials_stock_lot_id_foreign FOREIGN KEY(lot_id) REFERENCES lot(id);
 ALTER TABLE
@@ -132,10 +131,7 @@ ALTER TABLE
 ALTER TABLE
     invoice ADD CONSTRAINT invoice_supplier_id_foreign FOREIGN KEY(supplier_id) REFERENCES supplier(id);
 ALTER TABLE
-    invoice ADD CONSTRAINT invoice_lot_id_foreign FOREIGN KEY(lot_id) REFERENCES lot(id);
-ALTER TABLE
     supplier_x_lot ADD CONSTRAINT supplier_x_lot_supplier_id_foreign FOREIGN KEY(supplier_id) REFERENCES supplier(id);
-
 ALTER TABLE
     employee ADD CONSTRAINT employee_boss_id_foreign FOREIGN KEY(boss_id) REFERENCES employee(id);
 ALTER TABLE

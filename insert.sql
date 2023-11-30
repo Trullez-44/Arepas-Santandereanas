@@ -64,54 +64,54 @@ INSERT INTO ingredient (id, name) VALUES
 (8, 'Butter');
 
 -- STORAGE OFFICE
-INSERT INTO office (id, address, email, phone_number) VALUES
-(1, 'Carrera 7 # 72-34, Bogotá'),
-(2, 'Calle 127 # 19-15, Bogotá' ),
-(3, 'Carrera 15 # 48-68, Bogotá' ),
-(4, 'Calle 34 # 23-45, Bogotá'),
-(5, 'Carrera 27 # 56-89, Bogotá' );
+INSERT INTO office (id, address,manager_id,email, phone_number) VALUES
+(1001, 'Carrera 7 # 72-34, Bogotá',2,'bogota.office@arepas-santandereanas.com','123456789'),
+(1002, 'Calle 127 # 19-15, Bogotá',3,'bogota2.office@arepas-santandereanas.com','234567890' ),
+(1003, 'Carrera 15 # 48-68, Bogotá',4,'bogota3.office@arepas-santandereanas.com','345678901' ),
+(1004, 'Calle 34 # 23-45, Bogotá',5,'bogota4.office@arepas-santandereanas.com','456789012'),
+(1005, 'Carrera 27 # 56-89, Bogotá',6,'bogota5.office@arepas-santandereanas.com','567890123' );
 -- STORAGE AREAS
 INSERT INTO area (id,area_name,office_id,description) VALUES
-(1, 'Dairy Section 1', 1,'For Cheese and Butter'),  
-(2, 'Sweet Section', 1,'For Guava Paste and Dulce de Leche'),    
-(3, 'Cold Storage', 1,'For Ham'),    
-(4, 'Dry Storage', 1,'For Flour, Salt, and Sugar'),
-(5, 'Kitchen',1,NULL),
-(6, 'Dairy Section 1', 2,'For Cheese and Butter'),  
-(7, 'Sweet Section', 2,'For Guava Paste and Dulce de Leche'),    
-(8, 'Cold Storage', 2,'For Ham'),    
-(9, 'Dry Storage', 2,'For Flour, Salt, and Sugar'),
-(10, 'Kitchen',2,NULL),
-(11, 'Dairy Section 1', 3,'For Cheese and Butter'),  
-(12, 'Sweet Section', 3,'For Guava Paste and Dulce de Leche'),    
-(13, 'Cold Storage', 3,'For Ham'),    
-(14, 'Dry Storage', 3,'For Flour, Salt, and Sugar'),
-(15, 'Kitchen',3,NULL),
-(16, 'Dairy Section 1', 4,'For Cheese and Butter'),  
-(17, 'Sweet Section', 4,'For Guava Paste and Dulce de Leche'),    
-(18, 'Cold Storage', 4,'For Ham'),    
-(19, 'Dry Storage', 4,'For Flour, Salt, and Sugar'),
-(20, 'Kitchen',4,NULL),
-(21, 'Dairy Section 1', 5,'For Cheese and Butter'),  
-(22, 'Sweet Section', 5,'For Guava Paste and Dulce de Leche'),    
-(23, 'Cold Storage', 5,'For Ham'),    
-(24, 'Dry Storage', 5,'For Flour, Salt, and Sugar'),
-(25, 'Kitchen',5,NULL),
-(26, 'Cashier',1,'Cashier office 1'),
-(27, 'Cashier',2,'Cashier office 2'),
-(28, 'Cashier',3,'Cashier office 3'),
-(29, 'Cashier',4,'Cashier office 4'),
-(30, 'Cashier',5,'Cashier office 5'),
-(31, 'Packing Area',1,NULL),
-(32, 'Packing Area',2,NULL),
-(33, 'Packing Area',3,NULL),
-(34, 'Packing Area',4,NULL),
-(35, 'Packing Area',5,NULL),
-(36, 'Transportation Area',1,'Transportation Zone Office 1'),
-(37, 'Transportation Area',2,'Transportation Zone Office 2'),
-(38, 'Transportation Area',3,'Transportation Zone Office 3'),
-(39, 'Transportation Area',4,'Transportation Zone Office 4'),
-(40, 'Transportation Area',5,'Transportation Zone Office 5');
+(1, 'Dairy Section 1', 1001,'For Cheese and Butter'),  
+(2, 'Sweet Section', 1001,'For Guava Paste and Dulce de Leche'),    
+(3, 'Cold Storage', 1001,'For Ham'),    
+(4, 'Dry Storage', 1001,'For Flour, Salt, and Sugar'),
+(5, 'Kitchen',1001,NULL),
+(6, 'Dairy Section 1', 1002,'For Cheese and Butter'),  
+(7, 'Sweet Section', 1002,'For Guava Paste and Dulce de Leche'),    
+(8, 'Cold Storage', 1002,'For Ham'),    
+(9, 'Dry Storage', 1002,'For Flour, Salt, and Sugar'),
+(10, 'Kitchen',1002,NULL),
+(11, 'Dairy Section 1', 1003,'For Cheese and Butter'),  
+(12, 'Sweet Section', 1003,'For Guava Paste and Dulce de Leche'),    
+(13, 'Cold Storage', 1003,'For Ham'),    
+(14, 'Dry Storage', 1003,'For Flour, Salt, and Sugar'),
+(15, 'Kitchen',1003,NULL),
+(16, 'Dairy Section 1', 1004,'For Cheese and Butter'),  
+(17, 'Sweet Section', 1004,'For Guava Paste and Dulce de Leche'),    
+(18, 'Cold Storage', 1004,'For Ham'),    
+(19, 'Dry Storage', 1004,'For Flour, Salt, and Sugar'),
+(20, 'Kitchen',1004,NULL),
+(21, 'Dairy Section 1', 1005,'For Cheese and Butter'),  
+(22, 'Sweet Section', 1005,'For Guava Paste and Dulce de Leche'),    
+(23, 'Cold Storage', 1005,'For Ham'),    
+(24, 'Dry Storage', 1005,'For Flour, Salt, and Sugar'),
+(25, 'Kitchen',1005,NULL),
+(26, 'Cashier',1001,'Cashier office 1'),
+(27, 'Cashier',1002,'Cashier office 2'),
+(28, 'Cashier',1003,'Cashier office 3'),
+(29, 'Cashier',1004,'Cashier office 4'),
+(30, 'Cashier',1005,'Cashier office 5'),
+(31, 'Packing Area',1001,NULL),
+(32, 'Packing Area',1002,NULL),
+(33, 'Packing Area',1003,NULL),
+(34, 'Packing Area',1004,NULL),
+(35, 'Packing Area',1005,NULL),
+(36, 'Transportation Area',1001,'Transportation Zone Office 1'),
+(37, 'Transportation Area',1002,'Transportation Zone Office 2'),
+(38, 'Transportation Area',1003,'Transportation Zone Office 3'),
+(39, 'Transportation Area',1004,'Transportation Zone Office 4'),
+(40, 'Transportation Area',1005,'Transportation Zone Office 5');
 
 /*SUPPLIERS */
 INSERT INTO supplier (id, name, address, description, email, phone_number) VALUES 
@@ -172,7 +172,6 @@ INSERT INTO supplier (id, name, address, description, email, phone_number) VALUE
 /* Remember use this codes in invoice table */
 INSERT INTO lot (id, lot_number, expiration_date) VALUES 
 (1, 'QC05223', '2023-12-31'),
-(41, 'QC05498', '2024-12-31'),
 (2, 'QC06123', '2024-11-30'),
 (3, 'QC07223', '2024-10-31'),
 (4, 'QC08323', '2024-09-30'),
@@ -218,11 +217,11 @@ INSERT INTO lot (id, lot_number, expiration_date) VALUES
 (37, 'MTB230813', '2024-01-31'),
 (38, 'MTB240914', '2024-02-28'),
 (39, 'MTB251015', '2024-03-31'),
-(40, 'MTB261116', '2024-04-30');
+(40, 'MTB261116', '2024-04-30'),
+(41, 'QC05498', '2024-12-31');
 /* INGREDIENTS */
 INSERT INTO raw_materials_stock (id, pounds_per_unit, quantity, area_id, lot_id, description, ingredient_id) VALUES 
 (1, 40, 10, 1, 1, 'Double cream cheese block', 1),
-(41, 40, 10, 1, 41, 'Double cream cheese block', 1),
 (2, 40, 15, 6, 2, 'Double cream cheese block', 1),
 (3, 40, 25, 11,3, 'Double cream cheese block', 1),
 (4, 40, 18, 16,4, 'Double cream cheese block', 1),
@@ -262,7 +261,8 @@ INSERT INTO raw_materials_stock (id, pounds_per_unit, quantity, area_id, lot_id,
 (37, 20, 35, 6, 37, 'Table and kitchen margarine', 8),
 (38, 20, 45, 11, 38, 'Table and kitchen margarine', 8),
 (39, 20, 38, 16, 39, 'Table and kitchen margarine', 8),
-(40, 20, 42, 21, 40, 'Table and kitchen margarine', 8);
+(40, 20, 42, 21, 40, 'Table and kitchen margarine', 8),
+(41, 40, 10, 1, 41, 'Double cream cheese block', 1);
 INSERT INTO raw_materials_stock (id, pounds_per_unit, quantity, area_id, lot_id, description, ingredient_id) VALUES 
 (31, 100, 80, 4, 31, 'White Sugar Sack', 7),
 (32, 100, 70, 9, 32, 'White Sugar Sack', 7),
@@ -271,55 +271,55 @@ INSERT INTO raw_materials_stock (id, pounds_per_unit, quantity, area_id, lot_id,
 (35, 100, 90, 24, 35, 'White Sugar Sack', 7);
 /* SUPPLIER X LOT */
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(1, 1, 1),
-(41, 1, 41),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4),
-(5, 5, 5);
+(1, 101, 1),
+(2, 102, 2),
+(3, 103, 3),
+(4, 104, 4),
+(5, 105, 5);
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(6, 6, 6),
-(7, 7, 7),
-(8, 8, 8),
-(9, 9, 9),
-(10, 10, 10);
+(6, 106, 6),
+(7, 107, 7),
+(8, 108, 8),
+(9, 109, 9),
+(10, 110, 10);
 
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(11, 11, 11),
-(12, 12, 12),
-(13, 13, 13),
-(14, 14, 14),
-(15, 15, 15);
+(11, 111, 11),
+(12, 112, 12),
+(13, 113, 13),
+(14, 114, 14),
+(15, 115, 15);
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(16, 16, 16),
-(17, 17, 17),
-(18, 18, 18),
-(19, 19, 19),
-(20, 20, 20);
+(16, 116, 16),
+(17, 117, 17),
+(18, 118, 18),
+(19, 119, 19),
+(20, 120, 20);
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(21, 21, 21),
-(22, 22, 22),
-(23, 23, 23),
-(24, 24, 24),
-(25, 25, 25);
+(21, 121, 21),
+(22, 122, 22),
+(23, 123, 23),
+(24, 124, 24),
+(25, 125, 25);
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(26, 26, 26),
-(27, 27, 27),
-(28, 28, 28),
-(29, 29, 29),
-(30, 30, 30);
+(26, 126, 26),
+(27, 127, 27),
+(28, 128, 28),
+(29, 129, 29),
+(30, 130, 30);
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(31, 31, 31),
-(32, 32, 32),
-(33, 33, 33),
-(34, 34, 34),
-(35, 35, 35);
+(31, 131, 31),
+(32, 132, 32),
+(33, 133, 33),
+(34, 134, 34),
+(35, 135, 35);
 INSERT INTO supplier_x_lot (id, supplier_id, lot_id) VALUES 
-(36, 36, 36),
-(37, 37, 37),
-(38, 38, 38),
-(39, 39, 39),
-(40, 40, 40);
+(36, 136, 36),
+(37, 137, 37),
+(38, 138, 38),
+(39, 139, 39),
+(40, 140, 40),
+(41, 101, 41);
 /* EMPLOYEE_PLACE */
 INSERT INTO employee_place (id, employee_id, area_id, description) VALUES 
 (1, 7, 5, 'Kitchen Area'),
@@ -378,53 +378,53 @@ INSERT INTO employee_place (id, employee_id, area_id, description) VALUES
 (45, 51, 35, 'Packing Area');
 /*INVOICES  */
 INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
-(1, 2, '2023-01-10', 1),  
-(2, 3, '2023-01-15', 2),  
-(3, 4, '2023-02-01', 3),  
-(4, 5, '2023-02-05', 4),  
-(5, 6, '2023-02-20', 5);  
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(6, 2, '2023-01-12', 6),  
-(7, 3, '2023-01-18', 7),  
-(8, 4, '2023-02-02', 8),  
-(9, 5, '2023-02-14', 9), 
-(10, 6, '2023-02-25', 10); 
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(11, 2, '2023-01-13', 11),
-(12, 3, '2023-01-19', 12),
-(13, 4, '2023-02-03', 13),
-(14, 5, '2023-02-15', 14),
-(15, 6, '2023-02-26', 15);
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(16, 2, '2023-01-14',  16),
-(17, 3, '2023-01-20',  17),
-(18, 4, '2023-02-04',  18),
-(19, 5, '2023-02-16',  19),
-(20, 6, '2023-02-27',  20);
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(21, 2, '2023-01-16',  2),
-(22, 3, '2023-01-22',  22),
-(23, 4, '2023-02-06',  2),
-(24, 5, '2023-02-17',  24),
-(25, 6, '2023-02-28',  25);
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(26, 2, '2023-01-17',  26),
-(27, 3, '2023-01-23',  27),
-(28, 4, '2023-02-07',  28),
-(29, 5, '2023-02-18',  29),
-(30, 6, '2023-03-01',  30);
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(31, 2, '2023-01-18',  31),
-(32, 3, '2023-01-24',  32),
-(33, 4, '2023-02-08',  33),
-(34, 5, '2023-02-19',  34),
-(35, 6, '2023-03-02',  35);
-INSERT INTO invoice (id, employee_id, date, supplier_id, lot) VALUES 
-(36, 2, '2023-01-19', 36),
-(37, 3, '2023-01-25', 37),
-(38, 4, '2023-02-09', 38),
-(39, 5, '2023-02-20', 39),
-(40, 6, '2023-03-03', 40);
+(1, 2, '2023-01-10', 101),  
+(2, 3, '2023-01-15', 102),  
+(3, 4, '2023-02-01', 103),  
+(4, 5, '2023-02-05', 104),  
+(5, 6, '2023-02-20', 105);  
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(6, 2, '2023-01-12', 106),  
+(7, 3, '2023-01-18', 107),  
+(8, 4, '2023-02-02', 108),  
+(9, 5, '2023-02-14', 109), 
+(10, 6, '2023-02-25', 110); 
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(11, 2, '2023-01-13', 111),
+(12, 3, '2023-01-19', 112),
+(13, 4, '2023-02-03', 113),
+(14, 5, '2023-02-15', 114),
+(15, 6, '2023-02-26', 115);
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(16, 2, '2023-01-14', 116),
+(17, 3, '2023-01-20', 117),
+(18, 4, '2023-02-04', 118),
+(19, 5, '2023-02-16', 119),
+(20, 6, '2023-02-27', 120);
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(21, 2, '2023-01-16', 122),
+(22, 3, '2023-01-22', 122),
+(23, 4, '2023-02-06', 123),
+(24, 5, '2023-02-17', 124),
+(25, 6, '2023-02-28', 125);
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(26, 2, '2023-01-17', 126),
+(27, 3, '2023-01-23', 127),
+(28, 4, '2023-02-07', 128),
+(29, 5, '2023-02-18', 129),
+(30, 6, '2023-03-01', 130);
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(31, 2, '2023-01-18', 131),
+(32, 3, '2023-01-24', 132),
+(33, 4, '2023-02-08', 133),
+(34, 5, '2023-02-19', 134),
+(35, 6, '2023-03-02', 135);
+INSERT INTO invoice (id, employee_id, date, supplier_id) VALUES 
+(36, 2, '2023-01-19', 136),
+(37, 3, '2023-01-25', 137),
+(38, 4, '2023-02-09', 138),
+(39, 5, '2023-02-20', 139),
+(40, 6, '2023-03-03', 140);
 /* -- Ingredients in Invoice Table
  */
 
@@ -478,23 +478,19 @@ INSERT INTO ingredients_in_invoice (id, invoice_id, ingredient_id, quantity, des
 (38, 38, 8, 45, 'Butter Lot 38', 310000, 'MTB240914'),
 (39, 39, 8, 38, 'Butter Lot 39', 295000, 'MTB251015'),
 (40, 40, 8, 42, 'Butter Lot 40', 305000, 'MTB261116');
-/* EMAILS */
--- Insert Statements for Manager Emails
-
-
 
 /* POSSIBLE QUERIES  */
 /*This retrieves records that will expire in the next 30 days. 
-Select Records Expiring in the Next 30 Days */
-SELECT * FROM lot WHERE expiration_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY);
+Select Records Expiring in the Next 30 Days *//* 
+SELECT * FROM lot WHERE expiration_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY); */
 /* 
 Select Records that Expired in the Last 30 Days
 This query selects records that expired in the last 30 days.*/
-SELECT * FROM lot WHERE expiration_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE();
+/* SELECT * FROM lot WHERE expiration_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND CURDATE();
 
 
 select m.id,m.name, f.id,f.address, GROUP_CONCAT(a.area_name) as AREAS
 FROM office f
 JOIN employee m ON f.manager_id = m.id
 JOIN area a ON f.id = a.office_id
-GROUP BY f.id;
+GROUP BY f.id; */
