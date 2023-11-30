@@ -602,55 +602,57 @@ WHERE
 #### CREATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
+CREATE PROCEDURE CreateSupplier(IN id INT UNSIGNED,
+                                name VARCHAR(255),
+                                address VARCHAR(255),
+                                description VARCHAR(255),
+                                email VARCHAR(255),
+                                phone_number VARCHAR(255))
 BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
+    INSERT INTO supplier VALUES (id, name, address, description, email, phone_number);
 END //
 DELIMITER ;
 
-CALL CreateInvoice(41,4,'2023-11-30',104);
+CALL CreateSupplier(145, 'SUPPLIER TESTEOOO AAAAAAH', '123 Main St', 'Description', 'supplier@example.com', '123-456-7890');
  
 ```
 #### READ
 ```SQL
 DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
+CREATE PROCEDURE FindSupplierById(IN findId INT)
 BEGIN
-    SELECT * FROM invoice
+    SELECT * FROM supplier
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(41);
+CALL FindSupplierById(145);
  
 ```
 #### UPDATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
+CREATE PROCEDURE EditSupplier(IN findId INT UNSIGNED, changeName VARCHAR(255))
 BEGIN
-    Update invoice
-    SET id = changeId
+    UPDATE supplier
+    SET name = changeName
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL EditInvoices(41,42);
+CALL EditSupplier(145, 'NUEVO SUPPLIER AAAAAH');
 ```
 #### DELETE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
+CREATE PROCEDURE DeleteSupplier(IN deleteId INT UNSIGNED)
 BEGIN
-    DELETE FROM invoice
+    DELETE FROM supplier
     WHERE id = deleteId;
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(42);
+CALL DeleteSupplier(145);
 
 
 ```
@@ -856,7 +858,7 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL CreateEmployee(43, 'John', 'Doe', '123 Main St', 'Manager', NULL, 'john.doe@example.com', '123-456-7890');
+CALL CreateEmployee(43, 'TORRA', 'JEREZ', 'Torre ZENITH', 'Manager', NULL, 'TESTING@example.com', '123-456-7890');
  
 ```
 #### READ
@@ -1038,7 +1040,7 @@ CALL GetTopIngredientInArea('Dry Storage');
  
 ```
 
-#### 5. SERACH STOCK LEFT BY LOT CODE 
+#### 5. SEARCH STOCK LEFT BY LOT CODE 
 
 THis query shows you some details about the stock left filtering by lot code.
 
@@ -1080,28 +1082,29 @@ CALL CreateRawMaterialsStock(42, 2, 100, 1, 1, 'Description', 1);
 #### READ
 ```SQL
 DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
+CREATE PROCEDURE FindRawMaterialsStockById(IN findId INT)
 BEGIN
-    SELECT * FROM invoice
+    SELECT * FROM raw_materials_stock
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(42);
- 
+CALL FindRawMaterialsStockById(42);
+  
 ```
 #### UPDATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
+CREATE PROCEDURE EditRawMaterialsStock(IN findId INT UNSIGNED, changeQuantity INT UNSIGNED)
 BEGIN
-    Update invoice
-    SET id = changeId
+    UPDATE raw_materials_stock
+    SET quantity = changeQuantity
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL EditInvoices(42,43);
+CALL EditRawMaterialsStock(42, 200);
+ 
 ```
 #### DELETE
 ```SQL
@@ -1195,55 +1198,56 @@ CALL DeleteInvoice(42);
 #### CREATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
+CREATE PROCEDURE CreateArea(IN id INT UNSIGNED,
+                            area_name VARCHAR(255),
+                            office_id INT UNSIGNED,
+                            description VARCHAR(255))
 BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
+    INSERT INTO area VALUES (id, area_name, office_id, description);
 END //
 DELIMITER ;
 
-CALL CreateInvoice(41,4,'2023-11-30',104);
+CALL CreateArea(44, 'Zona de Azote', 1, 'Acà se azota');
+ 
+ 
  
 ```
 #### READ
 ```SQL
 DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
+CREATE PROCEDURE FindAreaById(IN findId INT)
 BEGIN
-    SELECT * FROM invoice
+    SELECT * FROM area
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(41);
+CALL FindAreaById(44);
  
 ```
 #### UPDATE
 ```SQL
-DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
+CREATE PROCEDURE EditArea(IN findId INT UNSIGNED, changeName VARCHAR(255))
 BEGIN
-    Update invoice
-    SET id = changeId
+    UPDATE area
+    SET area_name = changeName
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL EditInvoices(41,42);
+CALL EditArea(45, 'AEROPUERTOOOOOOOO');
 ```
 #### DELETE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
+CREATE PROCEDURE DeleteArea(IN deleteId INT UNSIGNED)
 BEGIN
-    DELETE FROM invoice
+    DELETE FROM area
     WHERE id = deleteId;
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(42);
+CALL DeleteArea(45);
 ```
 ## INGREDIENT TABLE
 #### 1. 
@@ -1259,55 +1263,55 @@ CALL DeleteInvoice(42);
 #### CREATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
+CREATE PROCEDURE CreateIngredient(IN id INT UNSIGNED,
+                                  name VARCHAR(255))
 BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
+    INSERT INTO ingredient VALUES (id, name);
 END //
 DELIMITER ;
 
-CALL CreateInvoice(41,4,'2023-11-30',104);
+CALL CreateIngredient(144, 'INGREDIENTE:AGUARDIENTE');
  
 ```
 #### READ
 ```SQL
 DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
+CREATE PROCEDURE FindIngredientById(IN findId INT)
 BEGIN
-    SELECT * FROM invoice
+    SELECT * FROM ingredient
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(41);
+CALL FindIngredientById(144);
+ 
  
 ```
 #### UPDATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
+CREATE PROCEDURE EditIngredient(IN findId INT UNSIGNED, changeName VARCHAR(255))
 BEGIN
-    Update invoice
-    SET id = changeId
+    UPDATE ingredient
+    SET name = changeName
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL EditInvoices(41,42);
+CALL EditIngredient(144, 'GUARO');
+
 ```
 #### DELETE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
+CREATE PROCEDURE DeleteIngredient(IN deleteId INT UNSIGNED)
 BEGIN
-    DELETE FROM invoice
+    DELETE FROM ingredient
     WHERE id = deleteId;
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(42);
+CALL DeleteIngredient(144);
 ```
 ## LOT TABLE
 #### 1. 
@@ -1323,53 +1327,53 @@ CALL DeleteInvoice(42);
 #### CREATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
+CREATE PROCEDURE CreateLot(IN id INT UNSIGNED,
+                           lot_number VARCHAR(255),
+                           expiration_date DATE)
 BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
+    INSERT INTO lot VALUES (id, lot_number, expiration_date);
 END //
 DELIMITER ;
 
-CALL CreateInvoice(41,4,'2023-11-30',104);
+CALL CreateLot(4444, 'LOL1234', '2023-12-31');
  
 ```
 #### READ
 ```SQL
 DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
+CREATE PROCEDURE FindLotById(IN findId INT)
 BEGIN
-    SELECT * FROM invoice
+    SELECT * FROM lot
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(41);
+CALL FindLotById(4444);
+ 
  
 ```
 #### UPDATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
+CREATE PROCEDURE EditLot(IN findId INT UNSIGNED, changeNumber VARCHAR(255))
 BEGIN
-    Update invoice
-    SET id = changeId
+    UPDATE lot
+    SET lot_number = changeNumber
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL EditInvoices(41,42);
+CALL EditLot(1, 'VAL1234');
 ```
 #### DELETE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
+CREATE PROCEDURE DeleteLot(IN deleteId INT UNSIGNED)
 BEGIN
-    DELETE FROM invoice
+    DELETE FROM lot
     WHERE id = deleteId;
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(42);
+CALL DeleteLot(4444);
 ```
