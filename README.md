@@ -34,7 +34,7 @@ The internal abstraction level provides a detailed and technical view of the int
    - Attributes: id (PK), name, last_name, address, position, boss_id (FK).
    - Relationships: Supervises (FK - employee).
 
-2. **storage_office:**
+2. **office:**
    - Attributes: id (PK), address, manager_employee_id (FK).
    - Relationships: Has (FK - employee).
 
@@ -57,23 +57,15 @@ The internal abstraction level provides a detailed and technical view of the int
    - Attributes: id (PK), name, address.
    - Relationships: Supplies (FK - lot).
 
-8. **storage_area:**
+8. **area:**
    - Attributes: id (PK), area, storage_office_id (FK), employee_in_charge_id (FK).
    - Relationships: Located in (FK - storage_office), Supervised by (FK - employee).
 
-9. **emails:**
-   - Attributes: id (PK), description, email, owner_id (FK).
-   - Relationships: Owned by (FK - supplier, employee).
-
-10. **phone_numbers:**
-    - Attributes: id (PK), prefix, description, phone_number, owner_id (FK).
-    - Relationships: Owned by (FK - storage_office, employee, supplier).
-
-11. **ingredients_in_invoice:**
+9. **ingredients_in_invoice:**
     - Attributes: id (PK), invoice_id (FK), ingredient_id (FK).
     - Relationships: Includes (FK - invoice, ingredient).
 
-12. **supplier_x_lot:**
+10. **supplier_x_lot:**
     - Attributes: id (PK), supplier_id (FK), lot_id (FK).
     - Relationships: Supplies (FK - supplier, lot).
 
@@ -93,7 +85,7 @@ The conceptual abstraction level provides a more general and understandable view
    - Attributes: ID, Name, Last Name, Address, Position, Boss ID.
    - Relationships: Supervises (with Employee - Boss).
 
-2. **Storage_office:**
+2. **office:**
    - Attributes: ID, Address, Manager Employee ID.
    - Relationships: Has (with Employee - Manager Employee).
 
@@ -116,7 +108,7 @@ The conceptual abstraction level provides a more general and understandable view
    - Attributes: ID, Name, Address.
    - Relationships: Supplies (with Lot).
 
-8. **Storage_area:**
+8. **area:**
    - Attributes: ID, Area, Storage Office ID, Employee in Charge ID.
    - Relationships: Located in (with Storage Office), Supervised by (with Employee).
 
@@ -363,7 +355,7 @@ DELIMITER ;
 CALL GetInvoicesByOffice();
 
 ```
-## CRUD PROCEDURES FOR INVOICE
+## CRUD PROCEDURES FOR OFFICE
 #### CREATE
 ```SQL
 DELIMITER //
@@ -423,12 +415,13 @@ END //
 DELIMITER ;
 
 CALL DeleteOffice(1008);
+```
+## ADDITIONAL PROCEDURES FOR OFFICE
 
+This query would return all areas for a given office. It would take an office ID as a parameter and return all areas in that office.
 
-## ADDITIONAL PROCEDURES FOR INVOICE
-
-This procedure would return all areas for a given office. It would take an office ID as a parameter and return all areas in that office.
 ```SQL
+
 DELIMITER //
 CREATE PROCEDURE GetOfficeAreas(IN officeId INT)
 BEGIN
@@ -439,7 +432,7 @@ DELIMITER ;
 CALL GetOfficeAreas(1004);
  
 ```
-This procedure would return the manager of a given office. It would take an office ID as a parameter and return the manager of that office.
+This query would return the manager of a given office. It would take an office ID as a parameter and return the manager of that office.
 ```SQL
 DELIMITER //
 CREATE PROCEDURE GetOfficeManager(IN office_id INT)
@@ -453,7 +446,7 @@ DELIMITER ;
 CALL GetOfficeManager(1004);
  
 ```
-This procedure would return all invoices created by the manager of a given office. It would take an office ID as a parameter and return all invoices created by the manager of that office.
+This query would return all invoices created by the manager of a given office. It would take an office ID as a parameter and return all invoices created by the manager of that office.
 ```SQL
 DELIMITER //
 CREATE PROCEDURE GetOfficeInvoices(IN office_id INT)
@@ -464,11 +457,6 @@ BEGIN
 END //
 DELIMITER ;
 CALL GetOfficeInvoices(1004);
- 
-```
-
-```SQL
-
 ```
 
 ## SUPPLIER TABLE
@@ -609,7 +597,7 @@ WHERE
             i.supplier_id = s.id
     );
 ```
-## CRUD PROCEDURES FOR INVOICE
+## CRUD PROCEDURES FOR SUPPLIER
 
 #### CREATE
 ```SQL
@@ -666,7 +654,7 @@ CALL DeleteInvoice(42);
 
 
 ```
-## ADDITIONAL PROCEDURES OR QUERIES FOR INVOICE
+## ADDITIONAL PROCEDURES OR QUERIES FOR SUPPLIER
 
 Search an invoice by supplier ID
 ```SQL
@@ -682,20 +670,113 @@ CALL GetSupplierInvoices(104);
 
 ```
 
-```SQL
+## EMPLOYEE TABLE
+
+#### 1. EMPLOYEE AND THEIR INGREDIENTS
+
+ This query would return all raw materials handled by a given employee. It would take an employee ID as a parameter.
+
+```sql
 DELIMITER //
-CREATE PROCEDURE GetEmployeeInvoices(IN employeeId INT UNSIGNED)
+CREATE PROCEDURE GetEmployeeRawMaterials(IN employee_id INT)
 BEGIN
-    SELECT * FROM invoice
-    WHERE employee_id = employeeId;
+    SELECT e.id AS EMPLOYEE_ID, e.name AS EMPLOYEE_NAME, 
+    COALESCE(
+        (
+            SELECT GROUP_CONCAT(i.name SEPARATOR ', ')
+            FROM raw_materials_stock rms
+            JOIN ingredient i ON rms.ingredient_id = i.id
+            JOIN area a ON rms.area_id = a.id
+            JOIN employee_place ep ON a.id = ep.area_id
+            WHERE ep.employee_id = e.id
+        ), 'No ingredients'
+    ) AS RAW_MATERIALS
+FROM employee e
+WHERE e.id = employee_id;
 END //
 DELIMITER ;
 
-CALL GetEmployeeInvoices(2);
+CALL GetEmployeeRawMaterials(40);
+ 
 ```
-## EMPLOYEE TABLE
 
-#### 1. AREAS OF THE EMPLOYEES
+#### 2. INVOICES PER MANAGER
+
+ This query would return all invoices created by a given employee and the suppliers for those invoices. It would take an employee ID as a parameter.
+
+```sql
+DELIMITER //
+CREATE PROCEDURE GetEmployeeInvoicesAndSuppliers(IN employee_id INT)
+BEGIN
+    SELECT i.id AS `INVOICE ID`, i.date AS `INVOICE DATE`, 
+        (
+            SELECT s.name
+            FROM supplier s
+            WHERE s.id = i.supplier_id
+        ) AS `SUPPLIER NAME`
+    FROM invoice i
+    WHERE i.employee_id = employee_id;
+END //
+DELIMITER ;
+
+CALL GetEmployeeInvoicesAndSuppliers(4);
+ 
+```
+
+#### 3. EMPLOYEE OFFICE AND AREA
+
+This query would return the office and area for a given employee. It would take an employee ID as a parameter.
+
+```sql
+DELIMITER //
+CREATE PROCEDURE GetEmployeeOfficeAndArea(IN employee_id INT)
+BEGIN
+    SELECT e.id AS `EMPLOYEE ID`, e.name AS `EMPLOYEE NAME`, 
+        (
+            SELECT o.address
+            FROM  office o
+            JOIN  area a ON o.id = a.office_id
+            JOIN employee_place ep ON a.id = ep.area_id
+            WHERE ep.employee_id = e.id
+        ) AS `OFFICE ADDRESS`,
+        (
+            SELECT a.area_name
+            FROM area a
+            JOIN employee_place ep ON a.id = ep.area_id
+            WHERE ep.employee_id = e.id
+        ) AS `AREA NAME`
+    FROM employee e
+    WHERE e.id = employee_id;
+END //
+DELIMITER ;
+
+CALL GetEmployeeOfficeAndArea(10);
+ 
+```
+
+#### 4. THE EMPLOYEE MANAGER
+
+This query would return the manager of a given employee. It would take an employee ID as a parameter.
+
+```sql
+DELIMITER //
+CREATE PROCEDURE GetEmployeeManager(IN employee_id INT)
+BEGIN
+    SELECT e.id AS `EMPLOYEE ID`, e.name AS `EMPLOYEE NAME`, 
+        (
+            SELECT  CONCAT(m.name, ' ', m.last_name)
+            FROM employee m
+            WHERE m.id = e.boss_id
+        ) AS `MANAGER NAME`
+    FROM employee e
+    WHERE e.id = employee_id;
+END //
+DELIMITER ;
+
+CALL GetEmployeeManager(10);
+ 
+```
+#### 5. AREAS OF THE EMPLOYEES
 
 This query shows you the office and area of every employee.
 
@@ -703,188 +784,49 @@ This query shows you the office and area of every employee.
 DELIMITER //
 CREATE PROCEDURE GetEmployeeOfficeArea()
 BEGIN
-    SELECT 
-        e.id AS `EMPLOYEE ID`, 
-        e.name AS `EMPLOYEE NAME`, 
+    SELECT e.id AS `EMPLOYEE ID`, e.name AS `EMPLOYEE NAME`, 
         (
-            SELECT 
-                o.address
-            FROM 
-                office o
-            JOIN 
-                area a ON o.id = a.office_id
-            JOIN 
-                employee_place ep ON a.id = ep.area_id
+            SELECT o.address
+            FROM office o
+            JOIN area a ON o.id = a.office_id
+            JOIN employee_place ep ON a.id = ep.area_id
             WHERE 
-                ep.employee_id = e.id
+            p.employee_id = e.id
         ) AS `OFFICE ADDRESS`,
         (
-            SELECT 
-                a.area_name
-            FROM 
-                area a
-            JOIN 
-                employee_place ep ON a.id = ep.area_id
-            WHERE 
-                ep.employee_id = e.id
+            SELECT a.area_name
+            FROM area a
+            JOIN employee_place ep ON a.id = ep.area_id
+            WHERE ep.employee_id = e.id
         ) AS `AREA NAME`
-    FROM 
-        employee e
+    FROM employee e
     HAVING `OFFICE ADDRESS` IS NOT NULL;
 END //
 DELIMITER ;
 
- 
+
 ```
 
-#### 2. 
+#### 6. SUPPLIERS PER INVOICE PER EMPLOYEE
 
-Sure, here are five stored procedures with complex queries involving the `employee` table and several relationships:
-
-1. **GetEmployeeInvoicesAndSuppliers**: This procedure would return all invoices created by a given employee and the suppliers for those invoices. It would take an employee ID as a parameter.
-
-```sql
-DELIMITER //
-CREATE PROCEDURE GetEmployeeInvoicesAndSuppliers(IN employee_id INT)
-BEGIN
-    SELECT 
-        i.id AS `INVOICE ID`, 
-        i.date AS `INVOICE DATE`, 
-        (
-            SELECT 
-                s.name
-            FROM 
-                supplier s
-            WHERE 
-                s.id = i.supplier_id
-        ) AS `SUPPLIER NAME`
-    FROM 
-        invoice i
-    WHERE 
-        i.employee_id = employee_id;
-END //
-DELIMITER ;
-```
-
-2. **GetEmployeeOfficeAndArea**: This procedure would return the office and area for a given employee. It would take an employee ID as a parameter.
-
-```sql
-DELIMITER //
-CREATE PROCEDURE GetEmployeeOfficeAndArea(IN employee_id INT)
-BEGIN
-    SELECT 
-        e.id AS `EMPLOYEE ID`, 
-        e.name AS `EMPLOYEE NAME`, 
-        (
-            SELECT 
-                o.address
-            FROM 
-                office o
-            JOIN 
-                area a ON o.id = a.office_id
-            JOIN 
-                employee_place ep ON a.id = ep.area_id
-            WHERE 
-                ep.employee_id = e.id
-        ) AS `OFFICE ADDRESS`,
-        (
-            SELECT 
-                a.area_name
-            FROM 
-                area a
-            JOIN 
-                employee_place ep ON a.id = ep.area_id
-            WHERE 
-                ep.employee_id = e.id
-        ) AS `AREA NAME`
-    FROM 
-        employee e
-    WHERE 
-        e.id = employee_id;
-END //
-DELIMITER ;
-```
-
-3. **GetEmployeeManager**: This procedure would return the manager of a given employee. It would take an employee ID as a parameter.
-
-```sql
-DELIMITER //
-CREATE PROCEDURE GetEmployeeManager(IN employee_id INT)
-BEGIN
-    SELECT 
-        e.id AS `EMPLOYEE ID`, 
-        e.name AS `EMPLOYEE NAME`, 
-        (
-            SELECT 
-                CONCAT(m.name, ' ', m.last_name)
-            FROM 
-                employee m
-            WHERE 
-                m.id = e.boss_id
-        ) AS `MANAGER NAME`
-    FROM 
-        employee e
-    WHERE 
-        e.id = employee_id;
-END //
-DELIMITER ;
-```
-
-4. **GetEmployeeRawMaterials**: This procedure would return all raw materials handled by a given employee. It would take an employee ID as a parameter.
-
-```sql
-DELIMITER //
-CREATE PROCEDURE GetEmployeeRawMaterials(IN employee_id INT)
-BEGIN
-    SELECT 
-        e.id AS `EMPLOYEE ID`, 
-        e.name AS `EMPLOYEE NAME`, 
-        (
-            SELECT 
-                GROUP_CONCAT(i.name SEPARATOR ', ')
-            FROM 
-                raw_materials_stock rms
-            JOIN 
-                ingredient i ON rms.ingredient_id = i.id
-            JOIN 
-                area a ON rms.area_id = a.id
-            JOIN 
-                employee_place ep ON a.id = ep.area_id
-            WHERE 
-                ep.employee_id = e.id
-        ) AS `RAW MATERIALS`
-    FROM 
-        employee e
-    WHERE 
-        e.id = employee_id;
-END //
-DELIMITER ;
-```
-
-5. This procedure would return all suppliers for the invoices created by a given employee. It would take an employee ID as a parameter.
+This query would return all suppliers for the invoices created by a given employee. It would take an employee ID as a parameter.
 
 ```sql
 DELIMITER //
 CREATE PROCEDURE GetEmployeeSuppliers(IN employee_id INT)
 BEGIN
     IF employee_id >= 2 AND employee_id <= 6 THEN
-        SELECT 
-            e.id AS `EMPLOYEE ID`, 
-            e.name AS `EMPLOYEE NAME`, 
-            (
-                SELECT 
-                    GROUP_CONCAT(s.name SEPARATOR ', ')
-                FROM 
-                    invoice i
-                JOIN 
-                    supplier s ON i.supplier_id = s.id
-                WHERE 
-                    i.employee_id = e.id
-            ) AS `SUPPLIERS`
-        FROM 
-            employee e
-        WHERE 
-            e.id = employee_id;
+        SELECT e.id AS EMPLOYEE_ID, e.name AS EMPLOYEE_NAME, 
+    COALESCE(
+        (
+            SELECT GROUP_CONCAT(s.name SEPARATOR ', ')
+            FROM invoice i
+            JOIN supplier s ON i.supplier_id = s.id
+            WHERE i.employee_id = e.id
+        ), 'No invoices'
+    ) AS SUPPLIER_NAME
+FROM employee e
+WHERE e.id = employee_id;
         ELSE
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Error: employee_id must between 2 and 6';
@@ -896,126 +838,244 @@ DELIMITER ;
 CALL GetEmployeeSuppliers(4);
  
 ```
-
-These are just examples and might need to be adjusted based on your exact database structure and requirements. If you have any other questions or need further help, feel free to ask!
-
-```SQL
-
- 
-```
-
-#### 3. 
-
-
-
-```SQL
-
- 
-```
-
-#### 4. 
-
-
-
-```SQL
-
- 
-```
-
-#### 5.
-
-
-
-```SQL
-
- 
-```
 ## CRUD PROCEDURES FOR EMPLOYEE
 
 #### CREATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
+CREATE PROCEDURE CreateEmployee(IN id INT UNSIGNED,
+                                name VARCHAR(255),
+                                last_name VARCHAR(255),
+                                address VARCHAR(255),
+                                position VARCHAR(255),
+                                boss_id INT UNSIGNED,
+                                email VARCHAR(255),
+                                phone_number VARCHAR(255))
 BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
+    INSERT INTO employee value (id, name, last_name, address, position, boss_id, email, phone_number);
 END //
 DELIMITER ;
 
-CALL CreateInvoice(41,4,'2023-11-30',104);
+CALL CreateEmployee(43, 'John', 'Doe', '123 Main St', 'Manager', NULL, 'john.doe@example.com', '123-456-7890');
  
 ```
 #### READ
 ```SQL
 DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
+CREATE PROCEDURE FindEmployeeById(IN findId INT)
 BEGIN
-    SELECT * FROM invoice
+    SELECT * FROM employee
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(41);
+CALL FindEmployeeById(43);
  
 ```
 #### UPDATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
+CREATE PROCEDURE EditEmployee(IN findId INT UNSIGNED, changeName VARCHAR(255))
 BEGIN
-    Update invoice
-    SET id = changeId
+    UPDATE employee
+    SET name = changeName
     WHERE id = findId;
 END //
 DELIMITER ;
 
-CALL EditInvoices(41,42);
+CALL EditEmployee(1, 'Jane');
+ 
 ```
 #### DELETE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
+CREATE PROCEDURE DeleteEmployee(IN deleteId INT UNSIGNED)
 BEGIN
-    DELETE FROM invoice
+    DELETE FROM employee
     WHERE id = deleteId;
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(42);
-```
-## ADDITIONAL PROCEDURES OR QUERIES FOR EMPLOYEE
-```SQL
-
- 
+CALL DeleteEmployee(1);
 ```
 
 ## RAW_MATERIALS_STOCK TABLE
-#### 1. 
 
+#### 1. EMPLOYEE MANAGING THEIR INGREDIENTS
 
+This query shows you some details of a Ingredient Mover Employee, their ingredients and how many he manage.
 
 ```SQL
 
+  DELIMITER //
+CREATE PROCEDURE GetEmployeeMaterials(IN employee_id INT UNSIGNED)
+BEGIN
+    SELECT e.id AS EMPLOYEE_ID, e.name AS EMPLOYEE_NAME, e.last_name AS EMPLOYEE_LAST_NAME, e.position AS POSITION,
+        (
+            SELECT name
+            FROM employee
+            WHERE id = e.boss_id
+        ) AS BOSS_NAME,
+        (
+            SELECT GROUP_CONCAT(CONCAT(subquery.name, ' (', total_quantity, ' units)') SEPARATOR ', ')
+            FROM (
+                SELECT i.name, SUM(rms.quantity) as total_quantity
+                FROM raw_materials_stock rms
+                JOIN ingredient i ON rms.ingredient_id = i.id
+                JOIN area a ON rms.area_id = a.id
+                JOIN employee_place ep ON a.id = ep.area_id
+                WHERE ep.employee_id = e.id
+                GROUP BY i.name
+            ) AS subquery
+        ) AS RAW_MATERIALS
+    FROM employee e
+    WHERE e.id = employee_id;
+END //
+DELIMITER ;
+CALL GetEmployeeMaterials(20);
  
 ```
+
+#### 2. SPECIFICS INGREDIENT SEARCH
+
+THis query shows you some details about the employee, but mainly search the office that he is located and search the quantity of an specific ingredient.
+
+```SQL
+
+DELIMITER //
+CREATE PROCEDURE GetEmployeeAmountMaterials(IN employee_id INT UNSIGNED, IN ingredient_name VARCHAR(255))
+BEGIN
+    SELECT e.id AS EMPLOYEE_ID, e.name AS EMPLOYEE_NAME, e.last_name AS EMPLOYEE_LAST_NAME, e.position AS POSITION,
+        (
+            SELECT name
+            FROM employee
+            WHERE id = e.boss_id
+        ) AS BOSS_NAME,
+        (
+            SELECT o.address
+            FROM office o
+            JOIN area a ON o.id = a.office_id
+            JOIN employee_place ep ON a.id = ep.area_id
+            WHERE ep.employee_id = e.id
+        ) AS OFFICE_ADDRESS,
+        (
+            SELECT SUM(rms.quantity)
+            FROM raw_materials_stock rms
+            JOIN ingredient i ON rms.ingredient_id = i.id
+            JOIN area a ON rms.area_id = a.id
+            JOIN employee_place ep ON a.id = ep.area_id
+            WHERE ep.employee_id = e.id AND i.name = ingredient_name
+        ) AS INGREDIENT_QUANTITY
+    FROM employee e
+    WHERE e.id = employee_id;
+END //
+DELIMITER ;
+
+CALL GetEmployeeAmountMaterials(20, 'Flour');
+ 
+
+```
+
+#### 3.
+
+THis query shows you some details about the employee, but mainly search the office that he is located and search the quantity of an specific ingredient.
+
+```SQL
+
+CREATE PROCEDURE GetTopIngredientInArea(IN nameArea VARCHAR(255))
+BEGIN
+    SELECT i.name AS INGREDIENT_NAME, a.area_name AS AREA_NAME, o.address AS OFFICE_ADDRESS
+    FROM ingredient i
+    JOIN raw_materials_stock rms ON i.id = rms.ingredient_id
+    JOIN area a ON rms.area_id = a.id
+    JOIN office o ON a.office_id = o.id
+    WHERE i.id = (
+        SELECT rms.ingredient_id
+        FROM raw_materials_stock rms
+        WHERE rms.area_id = (
+            SELECT id
+            FROM area
+            WHERE area_name = 'Dry Storage'
+        )
+        GROUP BY rms.ingredient_id
+        ORDER BY SUM(rms.quantity) DESC
+        LIMIT 1
+    );
+END //
+DELIMITER ;
+
+```
+
+#### 4. Searchirg the ingredient with more stock per AREA
+
+THis query shows you some details about the location of a ingredient
+
+```SQL
+DELIMITER //
+CREATE PROCEDURE GetTopIngredientInArea(IN area_name VARCHAR(255))
+BEGIN
+    SELECT i.name AS INGREDIENT_NAME, a.area_name AS AREA_NAME, o.address AS OFFICE_ADDRESS
+    FROM ingredient i
+    JOIN raw_materials_stock rms ON i.id = rms.ingredient_id
+    JOIN area a ON rms.area_id = a.id
+    JOIN office o ON a.office_id = o.id
+    WHERE i.id IN (
+        SELECT rms.ingredient_id
+        FROM raw_materials_stock rms
+        WHERE rms.area_id = (
+            SELECT id,
+            FROM area
+            WHERE area_name = area_name
+        )
+        GROUP BY rms.ingredient_id
+        ORDER BY SUM(rms.quantity) DESC
+        LIMIT 1
+    );
+END //
+DELIMITER ;
+
+CALL GetTopIngredientInArea('Dry Storage');
+ 
+```
+
+#### 5. SERACH STOCK LEFT BY LOT CODE 
+
+THis query shows you some details about the stock left filtering by lot code.
+
+```SQL
+DELIMITER //
+CREATE PROCEDURE GetIngredientsInLot(IN lot_number VARCHAR(255))
+BEGIN
+    SELECT l.lot_number, i.name AS INGREDIENT_NAME, SUM(rms.quantity) AS QUANTITY_LEFT
+    FROM lot l
+    JOIN raw_materials_stock rms ON l.id = rms.lot_id
+    JOIN ingredient i ON rms.ingredient_id = i.id
+    WHERE l.lot_number = lot_number
+    GROUP BY l.lot_number, i.name;
+END //
+DELIMITER ;
+
+CALL GetIngredientsInLot('QC05223');
+```
+
 ## CRUD PROCEDURES FOR RAW_MATERIALS_STOCK
 
 #### CREATE
 ```SQL
 DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
+CREATE PROCEDURE CreateRawMaterialsStock(IN id INT UNSIGNED,
+                                         pounds_per_unit INT UNSIGNED,
+                                         quantity INT UNSIGNED,
+                                         area_id INT UNSIGNED,
+                                         lot_id INT UNSIGNED,
+                                         description VARCHAR(255),
+                                         ingredient_id INT UNSIGNED)
 BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
+    INSERT INTO raw_materials_stock VALUES (id, pounds_per_unit, quantity, area_id, lot_id, description, ingredient_id);
 END //
 DELIMITER ;
 
-CALL CreateInvoice(41,4,'2023-11-30',104);
- 
+CALL CreateRawMaterialsStock(42, 2, 100, 1, 1, 'Description', 1);
 ```
 #### READ
 ```SQL
@@ -1027,7 +1087,7 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL FindInvoiceById(41);
+CALL FindInvoiceById(42);
  
 ```
 #### UPDATE
@@ -1041,7 +1101,7 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL EditInvoices(41,42);
+CALL EditInvoices(42,43);
 ```
 #### DELETE
 ```SQL
@@ -1053,13 +1113,9 @@ BEGIN
 END //
 DELIMITER ;
 
-CALL DeleteInvoice(42);
+CALL DeleteInvoice(43);
 ```
-## ADDITIONAL PROCEDURES OR QUERIES FOR RAW_MATERIALS_STOCK
-```SQL
 
- 
-```
 ## INVOICE TABLE
 #### 1. 
 
@@ -1124,11 +1180,7 @@ DELIMITER ;
 
 CALL DeleteInvoice(42);
 ```
-## ADDITIONAL PROCEDURES OR QUERIES FOR INVOICE
-```SQL
 
- 
-```
 ## AREA TABLE
 #### 1. 
 
@@ -1192,11 +1244,6 @@ END //
 DELIMITER ;
 
 CALL DeleteInvoice(42);
-```
-## ADDITIONAL PROCEDURES OR QUERIES FOR AREA
-```SQL
-
- 
 ```
 ## INGREDIENT TABLE
 #### 1. 
@@ -1262,11 +1309,6 @@ DELIMITER ;
 
 CALL DeleteInvoice(42);
 ```
-## ADDITIONAL PROCEDURES OR QUERIES FOR INGREDIENT
-```SQL
-
- 
-```
 ## LOT TABLE
 #### 1. 
 
@@ -1330,78 +1372,4 @@ END //
 DELIMITER ;
 
 CALL DeleteInvoice(42);
-```
-## ADDITIONAL PROCEDURES OR QUERIES FOR LOT
-```SQL
-
- 
-```
-## INGREDIENTS_IN_INVOICE TABLE
-#### 1. 
-
-
-
-```SQL
-
- 
-```
-## CRUD PROCEDURES FOR NGREDIENTS_IN_INVOICE
-
-#### CREATE
-```SQL
-DELIMITER //
-CREATE PROCEDURE CreateInvoice(IN id INT UNSIGNED,
-                                employee_id INT UNSIGNED,
-                                date DATE,
-                                supplier_id INT UNSIGNED)
-BEGIN
-    INSERT INTO invoice value (id,employee_id,date,supplier_id);
-END //
-DELIMITER ;
-
-CALL CreateInvoice(41,4,'2023-11-30',104);
- 
-```
-#### READ
-```SQL
-DELIMITER //
-CREATE PROCEDURE FindInvoiceById(IN findId INT)
-BEGIN
-    SELECT * FROM invoice
-    WHERE id = findId;
-END //
-DELIMITER ;
-
-CALL FindInvoiceById(41);
- 
-```
-#### UPDATE
-```SQL
-DELIMITER //
-CREATE PROCEDURE EditInvoices(IN findId INT UNSIGNED, changeId INT UNSIGNED)
-BEGIN
-    Update invoice
-    SET id = changeId
-    WHERE id = findId;
-END //
-DELIMITER ;
-
-CALL EditInvoices(41,42);
-```
-#### DELETE
-```SQL
-DELIMITER //
-CREATE PROCEDURE DeleteInvoice(IN deleteId INT UNSIGNED)
-BEGIN
-    DELETE FROM invoice
-    WHERE id = deleteId;
-END //
-DELIMITER ;
-
-CALL DeleteInvoice(42);
-```
-## ADDITIONAL PROCEDURES OR QUERIES FOR NGREDIENTS_IN_INVOICE
-```SQL
-
- 
 ```
