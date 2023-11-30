@@ -1,3 +1,4 @@
+USE Arepas_Santandereanas_Enterprise;
 -- EMPLOYEES
 INSERT INTO employee VALUE (1,'Luz Angela', 'Garcia','Calle 44 # 9-14','Jefa',NULL,NULL,NULL);
 INSERT INTO employee (id, name, last_name, address, position, boss_id, email, phone_number) VALUES
